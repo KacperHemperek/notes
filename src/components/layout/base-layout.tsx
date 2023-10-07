@@ -7,13 +7,7 @@ import { Navigation } from '~/components/navigation'
 export function BaseLayout({ children }: { children?: React.ReactNode }) {
     const { user, loadingUser, signOut, signIn } = useAuth()
 
-    const router = useRouter()
-
     const duration = 0.3
-
-    if (!loadingUser && !user) {
-        // void router.push('/')
-    }
 
     return (
         <AnimatePresence>
@@ -22,6 +16,8 @@ export function BaseLayout({ children }: { children?: React.ReactNode }) {
                     exit={{
                         opacity: 0,
                     }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ duration }}
                     key="loader"
                     className="fixed inset-0 bg-slate-950 flex flex-col items-center justify-center"
