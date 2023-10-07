@@ -2,6 +2,7 @@
   "name": "notes",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +10,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.35.7",
+    "@tanstack/react-query-devtools": "5.0.0-rc.4",
     "firebase": "^10.4.0",
+    "framer-motion": "^10.16.4",
+    "lucide-react": "^0.284.0",
     "next": "13.5.4",
     "prettier": "^3.0.3",
     "react": "^18",
