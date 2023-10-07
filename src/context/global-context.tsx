@@ -1,11 +1,11 @@
-import React from 'react';
-import {AuthContextProvider} from "~/context/auth-context";
+import React from 'react'
+import { AuthContextProvider } from '~/context/auth-context'
+import { ReactQueryProvider } from '~/context/query-context'
 
-
-function GlobalContext({children}: { children: React.ReactNode }) {
+export function GlobalContext({ children }: { children: React.ReactNode }) {
     return (
-        <AuthContextProvider>{children}</AuthContextProvider>
-    );
+        <ReactQueryProvider>
+            <AuthContextProvider>{children}</AuthContextProvider>
+        </ReactQueryProvider>
+    )
 }
-
-export default GlobalContext;
