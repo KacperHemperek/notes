@@ -1,9 +1,9 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Note } from '~/models/notes'
 import { useAuth } from '~/context/auth-context'
 import { ApiMutationOptions, Create } from '~/types/api'
 
-export function useAddNote(options: ApiMutationOptions) {
+export function useAddNote(options?: ApiMutationOptions) {
     const { user } = useAuth()
 
     return useMutation({
