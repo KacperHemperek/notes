@@ -3,6 +3,22 @@ import { onAuthStateChanged, signInWithPopup, User } from 'firebase/auth'
 import { auth, provider } from '~/utils/firebase'
 import { signOut as firebaseSignOut } from 'firebase/auth'
 
+function saveUserToLocalstorage(user: User) {
+    localStorage.setItem('user', JSON.stringify(user))
+}
+
+function getUserFromLocalstorage() {
+    try {
+        const user = localStorage.getItem('user')
+        if (user) {
+            return JSON.parse(user)
+        }
+        return null
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
 function useAuthContextValue() {
     const [user, setUser] = React.useState<User | null>(null)
 
@@ -11,12 +27,20 @@ function useAuthContextValue() {
     useEffect(() => {
         if (!user) {
             setLoadingUser(true)
+            const userFromLocalstorage = getUserFromLocalstorage()
+            if (userFromLocalstorage) {
+                setUser(userFromLocalstorage)
+                setLoadingUser(false)
+            }
         }
 
         const unsub = onAuthStateChanged(
             auth,
             (user) => {
                 setUser(user)
+
+                if (user) saveUserToLocalstorage(user)
+
                 setLoadingUser(false)
             },
             (e) => {
