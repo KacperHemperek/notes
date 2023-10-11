@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    @apply focus-visible:ring-2 ring-slate-50 ring-offset-2 ring-offset-slate-950 outline-0 transition-shadow;
+
+
+}
+
+*::-webkit-scrollbar {
+    @apply w-1 bg-transparent
+}
+
+*::-webkit-scrollbar-thumb {
+    @apply bg-slate-50 rounded-full
+}
+
+*::-webkit-scrollbar-track {
+    @apply bg-transparent
+}
