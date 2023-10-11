@@ -33,8 +33,8 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
         mutationFn: createNote,
         onSuccess: () => {
             queryClient.invalidateQueries(['notes', user?.uid])
-            console.log('closing')
-            handleOpenClose(false)
+            setOpen(false)
+            reset()
         },
         onError: (error) => {
             console.error(error)
