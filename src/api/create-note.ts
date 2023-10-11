@@ -3,6 +3,8 @@ import { Note } from '~/models/notes'
 import { useAuth } from '~/context/auth-context'
 import { ApiMutationOptions, Create } from '~/types/api'
 import { User } from 'firebase/auth'
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from '~/utils/firebase'
 
 export async function createNote({
     note,
@@ -15,7 +17,12 @@ export async function createNote({
         throw new Error('Unauthorized')
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    const notesCollection = collection(db, 'users', user.uid, 'notes')
 
-    return note
+    const docRef = await addDoc(notesCollection, note)
+
+    return {
+        ...note,
+        id: docRef.id,
+    }
 }

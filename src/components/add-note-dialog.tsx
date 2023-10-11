@@ -19,7 +19,6 @@ type FormState = {
 
 export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
     const [open, setOpen] = useState(false)
-    const [currentStep, setCurrentStep] = useState(0)
     const { user } = useAuth()
     const {
         register,
@@ -34,6 +33,7 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
         mutationFn: createNote,
         onSuccess: () => {
             queryClient.invalidateQueries(['notes', user?.uid])
+            console.log('closing')
             handleOpenClose(false)
         },
         onError: (error) => {
@@ -42,11 +42,6 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
     })
 
     const onSubmit = (data: FormState) => {
-        if (currentStep < 1) {
-            setCurrentStep((prev) => prev + 1)
-            return
-        }
-
         const newNote: Create<Note> = {
             title: data.title,
             question: data.question,
@@ -84,7 +79,6 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
                 <>
                     <D.Trigger asChild>{trigger}</D.Trigger>
                     <D.Overlay className="fixed bg-slate-900/20 backdrop-blur-sm inset-0" />
-
                     <D.Content asChild>
                         <div
                             className="pointer-events-none bg-transparent inset-0 flex items-center justify-center fixed"
@@ -118,134 +112,72 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
                                         Add a new note to your collection
                                     </p>
                                 </D.Description>
-                                {currentStep >= 0 && (
-                                    <motion.div
-                                        className={cn(
-                                            'grid gap-6',
-                                            currentStep !== 0 && 'hidden'
-                                        )}
+
+                                <motion.div className={'grid gap-6'}>
+                                    <NotesInput
+                                        register={register('title', {
+                                            required: {
+                                                message: 'Title is required',
+                                                value: true,
+                                            },
+                                            minLength: {
+                                                message:
+                                                    'Title must be at least 3 characters long',
+                                                value: 3,
+                                            },
+                                        })}
+                                        errors={errors}
+                                        label="Title"
+                                        disabled={isLoading}
+                                    />
+
+                                    <NotesTextarea
+                                        register={register('question', {
+                                            required: {
+                                                message: 'Question is required',
+                                                value: true,
+                                            },
+                                            minLength: {
+                                                message:
+                                                    'Question must be at least 7 characters long',
+                                                value: 7,
+                                            },
+                                        })}
+                                        label="Question"
+                                        errors={errors}
+                                        disabled={isLoading}
+                                    />
+
+                                    <NotesTextarea
+                                        register={register('answer', {
+                                            required: {
+                                                message: 'Answer is required',
+                                                value: true,
+                                            },
+                                            minLength: {
+                                                message:
+                                                    'Answer must be at least 7 characters long',
+                                                value: 7,
+                                            },
+                                        })}
+                                        label="Answer"
+                                        errors={errors}
+                                        disabled={isLoading}
+                                    />
+
+                                    <motion.button
+                                        animate={{
+                                            opacity:
+                                                !isValid || isLoading ? 0.5 : 1,
+                                        }}
+                                        type="submit"
+                                        layout="position"
+                                        disabled={isLoading || !isValid}
+                                        className="flex text-sm uppercase flex-row gap-2 items-center justify-center bg-slate-50 text-slate-950 font-medium rounded-md p-2 w-full disabled:opacity-50 disabled:pointer-events-none"
                                     >
-                                        <NotesInput
-                                            register={register('title', {
-                                                required: {
-                                                    message:
-                                                        'Title is required',
-                                                    value: true,
-                                                },
-                                                minLength: {
-                                                    message:
-                                                        'Title must be at least 3 characters long',
-                                                    value: 3,
-                                                },
-                                            })}
-                                            errors={errors}
-                                            label="Title"
-                                            disabled={isLoading}
-                                        />
-
-                                        <NotesTextarea
-                                            register={register('question', {
-                                                required: {
-                                                    message:
-                                                        'Question is required',
-                                                    value: true,
-                                                },
-                                                minLength: {
-                                                    message:
-                                                        'Question must be at least 7 characters long',
-                                                    value: 7,
-                                                },
-                                            })}
-                                            label="Question"
-                                            errors={errors}
-                                            disabled={isLoading}
-                                        />
-
-                                        <NotesTextarea
-                                            register={register('answer', {
-                                                required: {
-                                                    message:
-                                                        'Answer is required',
-                                                    value: true,
-                                                },
-                                                minLength: {
-                                                    message:
-                                                        'Answer must be at least 7 characters long',
-                                                    value: 7,
-                                                },
-                                            })}
-                                            label="Answer"
-                                            errors={errors}
-                                            disabled={isLoading}
-                                        />
-
-                                        <motion.button
-                                            animate={{
-                                                opacity:
-                                                    !isValid || isLoading
-                                                        ? 0.5
-                                                        : 1,
-                                            }}
-                                            type="submit"
-                                            layout="position"
-                                            disabled={isLoading || !isValid}
-                                            className="flex text-sm uppercase flex-row gap-2 items-center justify-center bg-slate-50 text-slate-950 font-medium rounded-md p-2 w-full disabled:opacity-50 disabled:pointer-events-none"
-                                        >
-                                            Next
-                                        </motion.button>
-                                    </motion.div>
-                                )}
-
-                                {currentStep >= 1 && (
-                                    <motion.div className="grid gap-6">
-                                        <NotesInput
-                                            label="Test"
-                                            register={register('test', {
-                                                required: {
-                                                    message: 'Test is required',
-                                                    value: true,
-                                                },
-                                                minLength: {
-                                                    message:
-                                                        'Test must be at least 3 characters long',
-                                                    value: 3,
-                                                },
-                                            })}
-                                            errors={errors}
-                                        />
-
-                                        <motion.button
-                                            animate={{
-                                                opacity:
-                                                    !isValid || isLoading
-                                                        ? 0.5
-                                                        : 1,
-                                            }}
-                                            type="submit"
-                                            layout="position"
-                                            disabled={isLoading || !isValid}
-                                            className="flex text-sm uppercase flex-row gap-2 items-center justify-center bg-slate-50 text-slate-950 font-medium rounded-md p-2 w-full disabled:opacity-50 disabled:pointer-events-none"
-                                        >
-                                            Submit
-                                        </motion.button>
-                                        <motion.button
-                                            animate={{
-                                                opacity: isLoading ? 0.5 : 1,
-                                            }}
-                                            onClick={() =>
-                                                setCurrentStep(
-                                                    (prev) => prev - 1
-                                                )
-                                            }
-                                            type="button"
-                                            layout="position"
-                                            disabled={isLoading}
-                                            className="flex flex-row gap-2 uppercase items-center font-medium justify-center bg-rose-500 text-slate-50 text-sm rounded-md p-2 w-full disabled:pointer-events-none"
-                                        >
-                                            Previous
-                                        </motion.button>
-                                    </motion.div>
-                                )}
+                                        Submit
+                                    </motion.button>
+                                </motion.div>
                             </motion.form>
                         </div>
                     </D.Content>

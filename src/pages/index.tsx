@@ -74,7 +74,7 @@ export default function Home() {
                             staggerChildren: 0.3,
                         }}
                         key="notes"
-                        className="grid grid-cols-1 gap-2 w-full md:grid-cols-2"
+                        className="grid grid-cols-1 gap-2 w-full md:grid-cols-2 lg:grid-cols-3"
                     >
                         <AddNoteDialog
                             trigger={
@@ -96,8 +96,11 @@ export default function Home() {
                                 key={note.id}
                                 className="flex flex-col gap-4 p-4 rounded-lg border border-slate-800"
                             >
-                                <h3>{note.title}</h3>
+                                <h3 className="text-xl font-semibold">
+                                    {note.title}
+                                </h3>
                                 <p>{note.question}</p>
+                                <p className="text-green-200">{note.answer}</p>
                                 {note.tags && (
                                     <div className="flex flex-row flex-wrap gap-2">
                                         {note.tags.map((tag) => (

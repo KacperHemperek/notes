@@ -34,10 +34,9 @@ export function NotesInput({
                 type={type}
                 id={register.name}
                 disabled={disabled}
-                className={cn(
-                    'rounded-md text-sm border border-slate-500 bg-slate-950 p-2 outline-0 focus-visible:ring-2 ring-slate-50 ring-offset-2 ring-offset-slate-950',
-                    disabled && 'opacity-50 pointer-events-none'
-                )}
+                className={
+                    'rounded-md text-sm border border-slate-500 bg-slate-950 p-2 outline-0 focus-visible:ring-2 ring-slate-50 ring-offset-2 ring-offset-slate-950 disabled:opacity-50 disabled:pointer-events-none'
+                }
             />
             <AnimatePresence>
                 {register.name in errors && errors[register.name] && (
