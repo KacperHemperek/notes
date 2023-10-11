@@ -66,9 +66,9 @@ export default function NoteCardList({
                         }
                     />
 
-                    {notes?.map((note, idx) => (
+                    {notes?.map((note) => (
                         <NoteCard
-                            key={'note__card__' + note.title + '__' + idx}
+                            key={'note__card__' + note.title + note.title}
                             note={note}
                         />
                     ))}
