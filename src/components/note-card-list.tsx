@@ -1,8 +1,12 @@
 import React from 'react'
 import { Note } from '~/models/notes'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Loader2, Plus } from 'lucide-react'
+import { Loader2, Plus, X } from 'lucide-react'
 import { AddNoteDialog } from '~/components/add-note-dialog'
+import { useMutation } from '@tanstack/react-query'
+import { deleteNote } from '~/api/delete-note'
+import { useQueryClient } from '@tanstack/react-query'
+import { useAuth } from '~/context/auth-context'
 
 const parent = {
     initial: {
@@ -75,13 +79,31 @@ export default function NoteCardList({
 }
 
 export function NoteCard({ note }: { note: Note }) {
+    const queryClient = useQueryClient()
+    const { user } = useAuth()
+    const { mutate: deleteMutation } = useMutation({
+        mutationFn: deleteNote,
+        mutationKey: ['deleteNote', note.id],
+        onMutate: () => {
+            queryClient.setQueryData(['notes', user?.uid], (old?: Note[]) => {
+                return old?.filter((n) => n.id !== note.id)
+            })
+        },
+    })
+
     return (
         <motion.div
+            layout={'position'}
             variants={item}
             key={note.id}
             className="flex flex-col gap-4 p-4 rounded-lg border border-slate-800"
         >
-            <h3 className="text-xl font-semibold">{note.title}</h3>
+            <div className="flex justify-between">
+                <h3 className="text-xl font-semibold">{note.title}</h3>
+                <button onClick={() => deleteMutation({ id: note.id, user })}>
+                    <X className="w-6 h-6 text-slate-50 hover:text-red-500 transition-colors" />
+                </button>
+            </div>
             <p>{note.question}</p>
             <p className="text-green-200">{note.answer}</p>
             {note.tags && (
