@@ -1,12 +1,12 @@
 import React from 'react'
-import { Note } from '~/models/notes'
+import { Note, NoteList } from '~/models/notes'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Loader2, Plus, X } from 'lucide-react'
 import { AddNoteDialog } from '~/components/add-note-dialog'
 import { useMutation } from '@tanstack/react-query'
 import { deleteNote } from '~/api/delete-note'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '~/context/auth-context'
+import { Loader2, Plus, X } from 'lucide-react'
 
 const parent = {
     initial: {
@@ -35,7 +35,7 @@ export default function NoteCardList({
     notes,
     isLoading,
 }: {
-    notes?: Note[]
+    notes?: NoteList[]
     isLoading: boolean
 }) {
     return (
@@ -68,7 +68,7 @@ export default function NoteCardList({
 
                     {notes?.map((note) => (
                         <NoteCard
-                            key={'note__card__' + note.title + note.title}
+                            key={'note__card__' + note.title + note.id}
                             note={note}
                         />
                     ))}
@@ -78,7 +78,7 @@ export default function NoteCardList({
     )
 }
 
-export function NoteCard({ note }: { note: Note }) {
+export function NoteCard({ note }: { note: NoteList }) {
     const queryClient = useQueryClient()
     const { user } = useAuth()
     const { mutate: deleteMutation } = useMutation({
@@ -104,8 +104,7 @@ export function NoteCard({ note }: { note: Note }) {
                     <X className="w-6 h-6 text-slate-50 hover:text-red-500 transition-colors" />
                 </button>
             </div>
-            <p>{note.question}</p>
-            <p className="text-green-200">{note.answer}</p>
+            <p>{note.description}</p>
             {note.tags && (
                 <div className="flex flex-row flex-wrap gap-2">
                     {note.tags.map((tag) => (

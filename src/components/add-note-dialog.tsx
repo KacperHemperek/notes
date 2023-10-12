@@ -2,19 +2,16 @@ import * as D from '@radix-ui/react-dialog'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NotesInput, NotesTextarea } from '~/components/inputs'
-import { Note } from '~/models/notes'
+import { Note, NoteList } from '~/models/notes'
 import { Create } from '~/types/api'
-import { createNote } from '~/api/create-note'
+import { createNoteList } from '~/api/create-note'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '~/context/auth-context'
-import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
-import { cn } from '~/utils/cn'
+import { motion, MotionConfig } from 'framer-motion'
 
 type FormState = {
     title: string
-    question: string
-    answer: string
-    test: string
+    description: string
 }
 
 export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
@@ -30,7 +27,7 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
     const queryClient = useQueryClient()
 
     const { mutate, isLoading } = useMutation({
-        mutationFn: createNote,
+        mutationFn: createNoteList,
         onSuccess: () => {
             queryClient.invalidateQueries(['notes', user?.uid])
             setOpen(false)
@@ -42,13 +39,13 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
     })
 
     const onSubmit = (data: FormState) => {
-        const newNote: Create<Note> = {
+        const newList: Create<NoteList> = {
             title: data.title,
-            question: data.question,
-            answer: data.answer,
+            description: data.description,
+            notes: [],
         }
 
-        mutate({ note: newNote, user })
+        mutate({ noteList: newList, user })
     }
 
     function handleOpenClose(val: boolean) {
@@ -132,7 +129,7 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
                                     />
 
                                     <NotesTextarea
-                                        register={register('question', {
+                                        register={register('description', {
                                             required: {
                                                 message: 'Question is required',
                                                 value: true,
@@ -143,28 +140,10 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
                                                 value: 7,
                                             },
                                         })}
-                                        label="Question"
+                                        label="Description"
                                         errors={errors}
                                         disabled={isLoading}
                                     />
-
-                                    <NotesTextarea
-                                        register={register('answer', {
-                                            required: {
-                                                message: 'Answer is required',
-                                                value: true,
-                                            },
-                                            minLength: {
-                                                message:
-                                                    'Answer must be at least 7 characters long',
-                                                value: 7,
-                                            },
-                                        })}
-                                        label="Answer"
-                                        errors={errors}
-                                        disabled={isLoading}
-                                    />
-
                                     <motion.button
                                         animate={{
                                             opacity:

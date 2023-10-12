@@ -1,6 +1,6 @@
 import { Poppins } from 'next/font/google'
 import { useAuth } from '~/context/auth-context'
-import { getNotes } from '~/api/get-notes'
+import { getNotes, getNotesLists } from '~/api/get-notes'
 import { Loader2, Plus } from 'lucide-react'
 import { AddNoteDialog } from '~/components/add-note-dialog'
 import { useQuery } from '@tanstack/react-query'
@@ -17,7 +17,7 @@ export default function Home() {
 
     const { data, isLoading } = useQuery({
         queryKey: ['notes', user?.uid],
-        queryFn: async () => getNotes(user),
+        queryFn: async () => getNotesLists(user),
     })
 
     return (
