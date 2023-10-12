@@ -2,7 +2,7 @@ import * as D from '@radix-ui/react-dialog'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NotesInput, NotesTextarea } from '~/components/inputs'
-import { NoteList } from '~/models/notes'
+import { NOTES_LIST_TABLE, NoteList } from '~/models/notes'
 import { Create } from '~/types/api'
 import { createNoteList } from '~/api/create-note'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -37,7 +37,7 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
   const { mutate, isLoading } = useMutation({
     mutationFn: createNoteList,
     onSuccess: () => {
-      queryClient.invalidateQueries(['notes', user?.uid])
+      queryClient.invalidateQueries([NOTES_LIST_TABLE, user?.uid])
       setOpen(false)
       reset()
     },
