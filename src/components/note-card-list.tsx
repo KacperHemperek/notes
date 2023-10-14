@@ -177,7 +177,12 @@ export function NoteCard({ note }: { note: NoteList }) {
               },
             })}
           />
-          <NotesButton disabled={!isValid} variant="danger" type="submit">
+          <NotesButton
+            disabled={!isValid}
+            variant="danger"
+            type="submit"
+            layout="position"
+          >
             Delete Permanently
           </NotesButton>
           <NotesButton
@@ -187,6 +192,7 @@ export function NoteCard({ note }: { note: NoteList }) {
               reset()
               setOpen(false)
             }}
+            layout="position"
           >
             Cancel
           </NotesButton>
