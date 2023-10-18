@@ -162,7 +162,7 @@ export function NoteCard({ note }: { note: NoteList }) {
           To remove this note, type <strong>{note.title}</strong> in the field
         </DialogDescription>
 
-        <div className="grid gap-6">
+        <div className="flex flex-col gap-3">
           <NotesInput
             errors={errors}
             label="Repeat title"
