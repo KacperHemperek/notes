@@ -20,7 +20,7 @@ export function getButtonStyle(
   }
 
   return cn(
-    'flex gap-2 items-center text-sm border justify-center rounded-md p-2 font-medium disabled:opacity-50 disabled:pointer-events-none transition-colors',
+    'flex gap-2 items-center text-sm border justify-center rounded-md p-1 md:p-2 font-medium disabled:opacity-50 disabled:pointer-events-none transition-colors',
     variants[variant],
     additionalStyles
   )
