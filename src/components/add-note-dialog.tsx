@@ -48,8 +48,8 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
 
   const onSubmit = (data: FormState) => {
     const newList: Create<NoteList> = {
-      title: data.title,
-      description: data.description,
+      title: data.title.trim(),
+      description: data.description.trim(),
       notes: [],
     }
 
