@@ -60,16 +60,16 @@ export default function NoteCardList({
             staggerChildren: 0.3,
           }}
           key="notes"
-          className="grid grid-cols-1 gap-2 w-full md:grid-cols-2 lg:grid-cols-3"
+          className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3"
         >
           <AddNoteDialog
             trigger={
               <motion.button
                 variants={item}
-                className="flex flex-col gap-4 p-4 rounded-lg border border-slate-800 items-center justify-center"
+                className="flex flex-col items-center justify-center gap-4 rounded-lg border border-slate-800 p-4"
               >
                 <h3 className="text-lg font-semibold ">Add new note</h3>
-                <Plus className="w-12 h-12" />
+                <Plus className="h-12 w-12" />
               </motion.button>
             }
           />
@@ -123,13 +123,13 @@ export function NoteCard({ note }: { note: NoteList }) {
         layout={'position'}
         variants={item}
         key={note.id}
-        className="flex flex-col gap-4 p-4 rounded-lg border border-slate-800"
+        className="flex flex-col gap-4 rounded-lg border border-slate-800 p-4"
       >
         <div className="flex justify-between">
           <h3 className="text-xl font-semibold">{note.title}</h3>
           <DialogTrigger asChild>
             <button>
-              <X className="w-6 h-6 text-slate-50 hover:text-red-500 transition-colors" />
+              <X className="h-6 w-6 text-slate-50 transition-colors hover:text-red-500" />
             </button>
           </DialogTrigger>
         </div>
@@ -139,7 +139,7 @@ export function NoteCard({ note }: { note: NoteList }) {
             {note.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-1 text-sm text-white bg-slate-800 rounded-md whitespace-nowrap"
+                className="whitespace-nowrap rounded-md bg-slate-800 px-2 py-1 text-sm text-white"
               >
                 {tag}
               </span>
@@ -213,10 +213,10 @@ function NoteListLoader() {
         },
       }}
       key="loader"
-      className="pt-12 flex flex-col items-center justify-center"
+      className="flex flex-col items-center justify-center pt-12"
     >
-      <h2 className="text-xl text-semibold pb-4">Loading your notes</h2>
-      <Loader2 className="w-12 h-12 animate-spin" />
+      <h2 className="text-semibold pb-4 text-xl">Loading your notes</h2>
+      <Loader2 className="h-12 w-12 animate-spin" />
     </motion.div>
   )
 }

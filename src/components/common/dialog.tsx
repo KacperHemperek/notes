@@ -12,7 +12,7 @@ export function DialogRoot({
   return (
     <D.Root open={open} onOpenChange={onOpenChange}>
       {children}
-      <D.Overlay className="fixed bg-slate-900/20 backdrop-blur-sm inset-0" />
+      <D.Overlay className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm" />
     </D.Root>
   )
 }
@@ -29,7 +29,7 @@ export function DialogContent({
   return (
     <D.Content asChild>
       <div
-        className="pointer-events-none bg-transparent inset-0 flex items-center justify-center fixed z-50"
+        className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-transparent"
         onClick={overlayClick}
       >
         <motion.form
@@ -45,7 +45,7 @@ export function DialogContent({
           layout="preserve-aspect"
           onClick={(e) => e.stopPropagation()}
           onSubmit={onSubmit}
-          className="bg-slate-950 p-4 rounded-lg border border-slate-500 left-6 w-[calc(100vw-48px)] md:max-w-md overflow-hidden"
+          className="left-6 w-[calc(100vw-48px)] overflow-hidden rounded-lg border border-slate-500 bg-slate-950 p-4 md:max-w-md"
         >
           {children}
         </motion.form>
@@ -67,7 +67,7 @@ export function DialogTitle({ children }: { children: React.ReactNode }) {
 export function DialogDescription({ children }: { children: React.ReactNode }) {
   return (
     <D.Description asChild>
-      <motion.p layout="position" className="text-sm text-slate-400 mb-4">
+      <motion.p layout="position" className="mb-4 text-sm text-slate-400">
         {children}
       </motion.p>
     </D.Description>

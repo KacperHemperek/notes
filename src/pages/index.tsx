@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className={`flex flex-col items-center p-6 ${poppins.className}`}>
-      <h1 className="font-bold text-2xl self-start mb-6">Your notes</h1>
+      <h1 className="mb-6 self-start text-2xl font-bold">Your notes</h1>
       <NoteCardList notes={data} isLoading={isLoading} />
     </div>
   )

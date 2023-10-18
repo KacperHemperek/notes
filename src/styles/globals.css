@@ -3,19 +3,17 @@
 @tailwind utilities;
 
 * {
-    @apply focus-visible:ring-2 ring-slate-50 ring-offset-2 ring-offset-slate-950 outline-0 transition-shadow;
-
-
+  @apply outline-0 ring-slate-50 ring-offset-2 ring-offset-slate-950 transition-shadow focus-visible:ring-2;
 }
 
 *::-webkit-scrollbar {
-    @apply w-1 bg-transparent
+  @apply w-1 bg-transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-    @apply bg-slate-50 rounded-full
+  @apply rounded-full bg-slate-50;
 }
 
 *::-webkit-scrollbar-track {
-    @apply bg-transparent
+  @apply bg-transparent;
 }
