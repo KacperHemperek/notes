@@ -66,10 +66,10 @@ export default function NoteCardList({
             trigger={
               <motion.button
                 variants={item}
-                className="flex flex-col items-center justify-center gap-4 rounded-lg border border-slate-800 p-4"
+                className="flex flex-col items-center justify-center gap-1 rounded-lg border border-slate-800 p-4"
               >
-                <h3 className="text-lg font-semibold ">Add new note</h3>
-                <Plus className="h-12 w-12" />
+                <h3 className="md:text-lg">Add new note</h3>
+                <Plus className="h-8 w-8 md:h-10 md:w-10" />
               </motion.button>
             }
           />
@@ -126,14 +126,14 @@ export function NoteCard({ note }: { note: NoteList }) {
         className="flex flex-col gap-4 rounded-lg border border-slate-800 p-4"
       >
         <div className="flex justify-between">
-          <h3 className="text-xl font-semibold">{note.title}</h3>
+          <h3 className="md:text-lg">{note.title}</h3>
           <DialogTrigger asChild>
             <button>
-              <X className="h-6 w-6 text-slate-50 transition-colors hover:text-red-500" />
+              <X className="h-4 w-4 text-slate-50 transition-colors hover:text-red-500 md:h-6 md:w-6" />
             </button>
           </DialogTrigger>
         </div>
-        <p>{note.description}</p>
+        <p className="text-sm text-slate-500">{note.description}</p>
         {note.tags && (
           <div className="flex flex-row flex-wrap gap-2">
             {note.tags.map((tag) => (

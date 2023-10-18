@@ -7,7 +7,7 @@ import { Create } from '~/types/api'
 import { createNoteList } from '~/api/create-note'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '~/context/auth-context'
-import { motion, MotionConfig } from 'framer-motion'
+import { MotionConfig } from 'framer-motion'
 import {
   DialogContent,
   DialogDescription,
@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '~/components/common/dialog'
-import { NotesButton, getButtonStyle } from '~/components/common/button'
+import { NotesButton } from '~/components/common/button'
 
 type FormState = {
   title: string
