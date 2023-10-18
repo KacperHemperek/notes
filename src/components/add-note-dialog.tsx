@@ -93,7 +93,7 @@ export function AddNoteDialog({ trigger }: { trigger: React.ReactNode }) {
               Add a new note to your collection
             </DialogDescription>
 
-            <div className={'grid gap-6'}>
+            <div className="flex flex-col gap-6">
               <NotesInput
                 register={register('title', {
                   required: {
