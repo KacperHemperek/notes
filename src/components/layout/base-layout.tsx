@@ -2,10 +2,9 @@ import { Loader2 } from 'lucide-react'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { useAuth } from '~/context/auth-context'
-import { useRouter } from 'next/router'
 import { Navigation } from '~/components/navigation'
 export function BaseLayout({ children }: { children?: React.ReactNode }) {
-  const { user, loadingUser, signOut, signIn } = useAuth()
+  const { user, loadingUser, signIn } = useAuth()
 
   const duration = 0.3
 

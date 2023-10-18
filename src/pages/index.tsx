@@ -19,9 +19,13 @@ export default function Home() {
   })
 
   return (
-    <div className={`flex flex-col items-center p-6 ${poppins.className}`}>
-      <h1 className="mb-6 self-start text-2xl font-bold">Your notes</h1>
-      <NoteCardList notes={data} isLoading={isLoading} />
+    <div className="px-4">
+      <div
+        className={`container mx-auto flex flex-col items-center py-12 ${poppins.className}`}
+      >
+        <h1 className="mb-6 self-start text-2xl font-bold">Your notes</h1>
+        <NoteCardList notes={data} isLoading={isLoading} />
+      </div>
     </div>
   )
 }
